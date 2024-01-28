@@ -1,0 +1,138 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+h1 {
+    font-size: 36px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+/* Home page styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+label {
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #007bff;
+    margin-left: 10px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+button[type="submit"],
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.msg {
+    color: green;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.child {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Chatroom page styles */
+#chat {
+    height: 400px;
+    overflow-y: scroll;
+    margin-top: 50px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#input {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#message {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #007bff;
+    margin-right: 10px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+#message:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+button[type="button"] {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#go-upload {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#go-upload-link {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Sign up styles */
+#sign-up-btn { 
+    display: block;
+    margin: 10px auto;
+}

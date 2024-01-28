@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Local Web Server</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static', filename='css/style.css') }}"
+		/>
+		<script
+			src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+			integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="{{url_for('static', filename='js/authentication.js')}}"
+			,
+			type="text/javascript"
+		></script>
+		<script>
+			var socket = io.connect(
+				"http://" + document.domain + ":" + location.port
+			);
+
+			socket.on("connect", () => {
+				console.log("Connected to server");
+			});
+
+			socket.on("disconnect", () => {
+				console.log("Disconnected from server");
+			});
+
+			socket.on("message", (message) => {
+				var chat = document.getElementById("chat");
+				var p = document.createElement("p");
+
+				if (
+					!message.includes("connected") &&
+					!message.includes("disconnected")
+				) {
+					const index = message.indexOf(": ");
+					const splittedMessage = [
+						message.slice(0, index),
+						message.slice(index + 2),
+					];
+
+					console.log(splittedMessage);
+					const username = splittedMessage[0];
+					const text = splittedMessage[1];
+					p.innerHTML = "<strong>" + username + ":</strong> " + text;
+				} else p.innerHTML = "<strong>" + message + "</strong>";
+
+				chat.appendChild(p);
+				chat.scrollTop = chat.scrollHeight;
+			});
+
+			socket.on("clear", () => {
+				var chat = document.getElementById("chat");
+				chat.innerHTML = "";
+			});
+
+			socket.on("redir", (msg) => {
+				if (
+					localStorage.getItem("id") === null ||
+					localStorage.getItem("id") === ""
+				) {
+					window.alert(msg);
+					window.location.replace("/");
+				} else {
+					socket.emit(
+						"setUsername",
+						JSON.parse(localStorage.getItem("id")).value
+					);
+				}
+			});
+
+			socket.on("emptyMessage", () => {
+				window.alert("MUST WRITE SOMETHING");
+			});
+
+			function sendMessage() {
+				var input = document.getElementById("message");
+				var message = input.value;
+				input.value = "";
+				socket.emit("message", message);
+			}
+
+			function sendWithEnter() {
+				if (event.key === "Enter") {
+					sendMessage();
+				}
+			}
+
+			function clearChat() {
+				socket.emit("clear");
+			}
+		</script>
+	</head>
+	<body onload="checkAuth()">
+		<h1>Local Web Server</h1>
+		<div id="chat">
+			<p>{{value}}</p>
+		</div>
+		<div id="input">
+			<input
+				type="text"
+				id="message"
+				required
+				onkeypress="sendWithEnter(event)"
+			/>
+			<button type="button" onclick="sendMessage()">Send</button>
+		</div>
+	</body>
+</html>

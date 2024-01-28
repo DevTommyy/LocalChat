@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Sign up</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script>
+        function suggest() {
+            parent = document.getElementById("suggestion");
+            var p = document.createElement('p');
+            p.classList.add('child');
+            p.innerText = 'Password must be at least 6 characters and contain at least one letter and digit';
+            parent.appendChild(p);
+        }
+
+        function cancelSuggestion() {
+            var parent = document.getElementById("suggestion");
+            parent.innerHTML = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>Sign up</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="/addToTable">
+        <label>Username:</label>
+        <input type="text" name="username" required>
+        <label>Password:</label>
+        <input type="password" name="password" onfocus="suggest()" onblur="cancelSuggestion()" required>
+        <button type="submit">Submit</button>
+        <div id="suggestion"></div>
+    </form>
+</body>
+</html>
